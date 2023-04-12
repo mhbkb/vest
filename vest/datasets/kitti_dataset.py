@@ -8,7 +8,7 @@ import glob
 from vest.datasets.kitti_utils import generate_depth_map
 from torchvision import transforms
 from torchvision.transforms import functional as TF
-from tu.ddp import master_only_print
+#from tu.ddp import master_only_print
 from vest.datasets.mono_dataset import MonoDataset
 from vest.datasets.clevrer import MyBaseDataset
 
@@ -21,7 +21,7 @@ class Dataset(MyBaseDataset):
         super().__init__(cfg, is_inference, is_test)
         self.root_dir = KITTI_ROOT
 
-        master_only_print(cfg.data.generator_params)
+        print(cfg.data.generator_params)
 
         # get filenames relative to data_path
 
@@ -50,7 +50,7 @@ class Dataset(MyBaseDataset):
             scene_paths.extend([(scene_path, i, 'l') for i in start_t_candidates])
             scene_paths.extend([(scene_path, i, 'r') for i in start_t_candidates])
         self.scene_paths = scene_paths
-        master_only_print('[INFO] found valid clips', len(scene_paths))
+        print('[INFO] found valid clips', len(scene_paths))
 
         self.dataset = KITTIRAWDataset(
             data_path=self.root_dir,

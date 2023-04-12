@@ -1,0 +1,278 @@
+{
+    "batch_size_fraction": 1,
+    "checkpoint": "",
+    "config_base": "",
+    "cudnn": {
+        "benchmark": true,
+        "deterministic": false
+    },
+    "data": {
+        "generator_params": {
+            "dataset_variant": "raw_city",
+            "do_color_aug_p": 1,
+            "do_flip_p": 0.5,
+            "interpolation": "BICUBIC",
+            "use_monodepth2_calibration": false,
+            "use_stereo": true,
+            "use_zero_tm1": false
+        },
+        "img_size": [
+            256,
+            768
+        ],
+        "input_image": [
+            "images"
+        ],
+        "input_types": [
+            {
+                "images": {
+                    "normalize": true,
+                    "num_channels": 3
+                }
+            }
+        ],
+        "name": "kitti_city",
+        "num_frames_D": 0,
+        "num_frames_G": 3,
+        "num_workers": 2,
+        "train": {
+            "batch_size": 1,
+            "initial_sequence_length": 3,
+            "max_sequence_length": 3,
+            "split": "train"
+        },
+        "type": "vest.datasets.kitti_ldi",
+        "val": {
+            "batch_size": 1,
+            "split": "val"
+        }
+    },
+    "dis": {
+        "image": {
+            "activation_norm_type": "instance",
+            "max_num_filters": 512,
+            "num_discriminators": 2,
+            "num_filters": 64,
+            "num_layers": 3,
+            "weight_norm_type": "none"
+        },
+        "type": "vest.discriminators.dummy"
+    },
+    "dis_opt": {
+        "adam_beta1": 0.5,
+        "adam_beta2": 0.999,
+        "eps": 1e-08,
+        "fused_opt": false,
+        "lr": 0.0002,
+        "lr_policy": {
+            "gamma": 0.1,
+            "iteration_mode": false,
+            "step_size": 60,
+            "type": "step"
+        },
+        "type": "adam"
+    },
+    "flow_network": {
+        "type": "vest.third_party.flow_net.flow_net"
+    },
+    "gen": {
+        "embed": {
+            "activation_norm_type": "instance",
+            "affine_grid_on_cpu": true,
+            "back_depth": 1000,
+            "front_depth": 1,
+            "grid_sample_on_cpu": false,
+            "input_disparity": false,
+            "input_eulerian": false,
+            "input_flow": false,
+            "input_norm_flow": false,
+            "kernel_size": 3,
+            "n_plane": 16,
+            "normalize_theta_weight": false,
+            "num_downsamples": 6,
+            "output_no_color": true,
+            "output_residual_color": false,
+            "plane_input_disparity": false,
+            "plane_input_eulerian": false,
+            "plane_input_flow": false,
+            "plane_input_norm_flow": false,
+            "theta_output_multiplier": 1,
+            "type": "vest.flows.mpi_single_view_net_flow_unet_color_blend_v2",
+            "use_affine_motion": true,
+            "use_gradient_checkpoint": false,
+            "weight_norm_type": "spectral"
+        },
+        "flow_confidence_threshold": 0.02,
+        "no_flow_confidence": false,
+        "type": "vest.generators.mpi_flow_v2",
+        "use_disp_scale": false,
+        "use_disp_scale_detached": false,
+        "use_eulerian_motion": false,
+        "use_flow_net": false,
+        "use_midas": false,
+        "use_mono": false,
+        "use_monodepth2": false,
+        "use_pts_transformer": false,
+        "use_pwc_net": false,
+        "use_stereo": false,
+        "use_stereo_detached": false,
+        "use_stereo_forward": true,
+        "use_stereo_ssi": false
+    },
+    "gen_opt": {
+        "adam_beta1": 0.5,
+        "adam_beta2": 0.999,
+        "eps": 1e-08,
+        "fused_opt": false,
+        "lr": 0.0002,
+        "lr_policy": {
+            "gamma": 0.8,
+            "iteration_mode": false,
+            "step_size": 5,
+            "type": "step"
+        },
+        "type": "adam"
+    },
+    "image_display_iter": 1000000000,
+    "image_save_iter": 1,
+    "inference_args": {},
+    "local_rank": 0,
+    "logdir": "/home/hmao/Documents/ece696_project/vest/logs/kitti_city",
+    "logging_iter": 1,
+    "max_epoch": 99999,
+    "max_iter": 20000,
+    "message": "KITTI city raw, LDI dataset intrinsics, with augmentation, 256 x 768",
+    "num_epochs_temporal_step": 20,
+    "pretrained_weight": "1b2M5rU740vBurLQ9iDP2kb4sP5HAb-Jx",
+    "single_frame_epoch": 0,
+    "snapshot_save_epoch": 1,
+    "snapshot_save_iter": 1,
+    "snapshot_save_start_epoch": 0,
+    "snapshot_save_start_iter": 0,
+    "test_data": {
+        "name": "dummy",
+        "num_workers": 0,
+        "test": {
+            "batch_size": 1,
+            "is_lmdb": false,
+            "roots": "",
+            "split": "test"
+        },
+        "type": "vest.datasets.kitti_ldi"
+    },
+    "trainer": {
+        "amp": "O1",
+        "custom_loss_weight": {
+            "alpha_entropy": 0.0,
+            "alpha_l0": 0.0,
+            "alpha_l1": 0.0,
+            "depth_smoothness": 0.0,
+            "depth_smoothness_v2": 0.0,
+            "disp_mse_mono": 0.0,
+            "disp_mse_mono_next": 0.0,
+            "disp_mse_mono_ssi": 0.0,
+            "disp_reg_mono": 0.0,
+            "disp_reg_mono_next": 0.0,
+            "disp_reg_mono_ssi": 0.0,
+            "edge_aware_v2": 0.0,
+            "eval_lpips_alex_pred_from_mpi": 0.0,
+            "eval_lpips_alex_syn_forward_stereo_view_mpi_inv_disp": 0.0,
+            "eval_lpips_vgg_pred_from_mpi": 0.0,
+            "eval_lpips_vgg_syn_forward_stereo_view_mpi_inv_disp": 0.0,
+            "eval_lpips_vgg_videoautoencoder_syn_forward_stereo_view_mpi_inv_disp": 0.0,
+            "eval_pnsr_cropped_pred_from_mpi": 0.0,
+            "eval_pnsr_kitti_ldi_pred_from_mpi": 0.0,
+            "eval_pnsr_pred_from_flownet": 0.0,
+            "eval_pnsr_pred_from_mpi": 0.0,
+            "eval_pnsr_syn_forward_stereo_view_mpi_inv_disp": 0.0,
+            "eval_pnsr_syn_from_depthnet": 0.0,
+            "eval_pnsr_syn_from_mpi": 0.0,
+            "eval_pnsr_syn_from_pred_depth": 0.0,
+            "eval_pnsr_syn_from_pred_depth_gt_adjusted": 0.0,
+            "eval_pnsr_syn_from_pred_depth_gt_adjusted_ssi": 0.0,
+            "eval_pnsr_syn_from_pred_depth_match_median": 0.0,
+            "eval_ssim_cropped_pred_from_mpi": 0.0,
+            "eval_ssim_kitti_ldi_pred_from_mpi": 0.0,
+            "eval_ssim_pred_from_flownet": 0.0,
+            "eval_ssim_pred_from_mpi": 0.0,
+            "eval_ssim_syn_forward_stereo_view_mpi_inv_disp": 0.0,
+            "eval_ssim_syn_from_depthnet": 0.0,
+            "eval_ssim_syn_from_mpi": 0.0,
+            "eval_ssim_syn_from_pred_depth": 0.0,
+            "eval_ssim_syn_from_pred_depth_gt_adjusted": 0.0,
+            "eval_ssim_syn_from_pred_depth_gt_adjusted_ssi": 0.0,
+            "eval_ssim_syn_from_pred_depth_match_median": 0.0,
+            "flow_fro_norm": 0.0,
+            "flow_gt_fro_norm": 0.0,
+            "flow_l1": 0.0,
+            "flow_layers_fro_norm": 0.0,
+            "layer_total_variation": 0.0,
+            "recon_prev_image_l1": 0.0,
+            "recon_prev_image_l2": 0.0,
+            "stereo_forward_l1_t": 1000.0,
+            "stereo_forward_l1_tp1": 0.0,
+            "stereo_forward_perc_mpi_inv_disp": 100.0,
+            "stereo_forward_reprojection_mpi_inv_disp": 0.0,
+            "stereo_forward_reprojection_t": 0.0,
+            "stereo_forward_reprojection_tp1": 0.0,
+            "stereo_forward_ssim_t": 0.0,
+            "stereo_forward_ssim_tp1": 0.0,
+            "theta_shift": 0.0,
+            "theta_similarity": 0.0,
+            "total_variation": 0.0,
+            "transmittance_smoothness": 0.0
+        },
+        "delay_allreduce": true,
+        "dis_step": 1,
+        "distributed_data_parallel": "ddp_default",
+        "gan_mode": "hinge",
+        "gan_relativistic": false,
+        "gen_step": 1,
+        "grad_acc_iter": 1,
+        "hparam_to_tensorboard": false,
+        "image_to_tensorboard": false,
+        "inference_sequence_length": -1,
+        "init": {
+            "gain": 0.02,
+            "type": "xavier"
+        },
+        "loss_weight": {
+            "L1": 1000.0,
+            "feature_matching": 0.0,
+            "flow": 0,
+            "gan": 0.0,
+            "perceptual": 10.0,
+            "temporal_gan": 0.0
+        },
+        "loss_weight_schedule": {
+            "disp_mse_mono": "none"
+        },
+        "model_average": false,
+        "model_average_batch_norm_estimation_iteration": 30,
+        "model_average_beta": 0.9999,
+        "model_average_remove_sn": true,
+        "model_average_start_iteration": 1000,
+        "num_frames_per_video": 10,
+        "num_videos_to_test": 64,
+        "num_videos_to_visualize": 4,
+        "perceptual_loss": {
+            "layers": [
+                "relu_1_1",
+                "relu_2_1",
+                "relu_3_1",
+                "relu_4_1",
+                "relu_5_1"
+            ],
+            "mode": "vgg19",
+            "num_scales": 3,
+            "weights": [
+                0.03125,
+                0.0625,
+                0.125,
+                0.25,
+                1.0
+            ]
+        },
+        "type": "vest.trainers.mpi_no_recurr_no_gan"
+    }
+}

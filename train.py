@@ -13,7 +13,7 @@ from vest.utils.gpu_affinity import set_affinity
 from vest.utils.imlogging import make_logging_dir
 from vest.utils.trainer import (get_model_optimizer_and_scheduler,
                                       get_trainer, set_random_seed)
-from tu.ddp import is_master, master_only
+#from tu.ddp import is_master, master_only
 import torch
 
 
@@ -85,18 +85,15 @@ def main():
     cfg.local_rank = local_rank
 
     cfg.logdir = os.path.join(ROOT, 'logs', cfg.data.name)
-    if not is_master():
-        cfg.logdir += f'_rank_{cfg.local_rank}'
 
     # master only
     make_logging_dir(cfg.logdir)
     # make logdir for all ranks
     os.makedirs(cfg.logdir, exist_ok=True)
 
-    if is_master():
-        # store cfg as json file
-        with open(os.path.join(cfg.logdir, 'cfg.json'), 'w') as f:
-            json.dump(cfg, f, sort_keys=True, indent=4)
+    # store cfg as json file
+    with open(os.path.join(cfg.logdir, 'cfg.json'), 'w') as f:
+        json.dump(cfg, f, sort_keys=True, indent=4)
 
     cudnn.deterministic = False
     cudnn.benchmark = True
@@ -108,7 +105,6 @@ def main():
     best_checkpoint_file = os.path.join(cfg.logdir, 'best.pt')
     best_val_gen_loss = None
 
-    @master_only
     def best_save(**kwargs):
         print('===========================================================')
         if 'total' in trainer.val_gen_losses:
