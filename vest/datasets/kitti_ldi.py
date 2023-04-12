@@ -3,7 +3,7 @@ import os
 import numpy as np
 from vest.datasets.kitti_dataset import Dataset as MonoDepth2Dataset
 from vest.models.monodepth2 import STEREO_SCALE_FACTOR
-from tu.ddp import master_only_print
+#from tu.ddp import master_only_print
 import torch
 
 
@@ -153,10 +153,10 @@ class Dataset(MonoDepth2Dataset):
         self.use_monodepth2_calibration = cfg.data.generator_params.use_monodepth2_calibration
 
         self.use_zero_tm1 = cfg.data.generator_params.use_zero_tm1
-        master_only_print('[INFO] generator params', cfg.data.generator_params)
+        print('[INFO] generator params', cfg.data.generator_params)
 
     def get_seq_dirs(self):
-        master_only_print('[INFO] loading variant', self.dataset_variant, 'split', self.data_info.split)
+        print('[INFO] loading variant', self.dataset_variant, 'split', self.data_info.split)
         if self.dataset_variant == 'raw_city':
             return get_raw_city_seq_dir(self.root_dir, data_split=self.data_info.split)
         elif self.dataset_variant == 'fvs':

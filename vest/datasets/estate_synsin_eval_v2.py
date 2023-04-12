@@ -15,7 +15,7 @@ import numpy as np
 from vest.datasets.clevrer import MyBaseDataset
 # from vest.datasets.estate_v2 import select_id_query_stereo_mag
 # from vest.datasets import colmap_utils
-from tu.ddp import master_only_print
+#from tu.ddp import master_only_print
 
 
 class Dataset(MyBaseDataset):
@@ -47,7 +47,7 @@ class Dataset(MyBaseDataset):
 
             if self.data_info.cache_file != '':
                 cache_file = self.data_info.cache_file
-                master_only_print('[INFO] loading metadata from cache', cache_file)
+                print('[INFO] loading metadata from cache', cache_file)
                 with open(cache_file, 'rb') as f:
                     cache = pickle.load(f)
                 self.clip_to_image_ids_sorted_by_timestamps = cache['clip_to_image_ids_sorted_by_timestamps']
@@ -159,7 +159,7 @@ class Dataset(MyBaseDataset):
 
         if self.data_info.cache_file != '':
             cache_file = self.data_info.cache_file
-            master_only_print('loading metadata from cache', cache_file)
+            print('loading metadata from cache', cache_file)
             if cache_file.endswith('.pkl'):
                 with open(cache_file, 'rb') as f:
                     cache = pickle.load(f)

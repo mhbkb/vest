@@ -10,7 +10,7 @@ import vest.utils.mpi as mpi
 import os
 from vest.utils.visualization.html_helper import BaseHTMLHelper
 from vest.config import AttrDict, get_attr_dict
-from tu.ddp import master_only_print
+#from tu.ddp import master_only_print
 import imageio
 from vest.trainers.base import BaseTrainer
 import base64
@@ -72,17 +72,17 @@ def get_data_t(cfg, sequence_length, batch_size):
 
 def verbose_setattr(c, key, value):
     if not hasattr(c, key):
-        master_only_print(f"setting {key} to {value} which did not exist")
+        print(f"setting {key} to {value} which did not exist")
         setattr(c, key, value)
 
 
 def verbose_delattr(c, key):
-    master_only_print(f"deleting attribute", key, getattr(c, key))
+    print(f"deleting attribute", key, getattr(c, key))
     delattr(c, key)
 
 
 def verbose_update_attr(c, key, value):
-    master_only_print(f"overwritting {key} from {getattr(c, key)} to {value}")
+    print(f"overwritting {key} from {getattr(c, key)} to {value}")
     setattr(c, key, value)
 
 

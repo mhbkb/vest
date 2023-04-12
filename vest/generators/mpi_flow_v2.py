@@ -1,6 +1,6 @@
 import torch.nn as nn
 from vest.losses.stereo import StereoLoss, BaseLoss
-from tu.configs import AttrDict
+#from tu.configs import AttrDict
 from vest.flows.mpi_single_view_net_flow_unet_color_blend_v2 import MPIEmbedder
 import torch.nn.functional as F
 

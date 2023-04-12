@@ -4,7 +4,7 @@ import time
 import pickle
 from tqdm import tqdm
 from functools import partial
-from tu.ddp import master_only_print
+#from tu.ddp import master_only_print
 from typing import List, Dict, Tuple, Union
 import torchvision
 from PIL import Image
@@ -78,7 +78,7 @@ class Dataset(MyBaseDataset):
 
         if self.data_info.cache_file != '':
             cache_file = self.data_info.cache_file
-            master_only_print('loading metadata from cache', cache_file)
+            print('loading metadata from cache', cache_file)
             with open(cache_file, 'rb') as f:
                 cache = pickle.load(f)
             # self.clip_to_timestamps = cache['clip_to_timestamps']

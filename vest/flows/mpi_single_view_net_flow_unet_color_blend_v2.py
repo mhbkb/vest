@@ -1,7 +1,6 @@
 import vest.utils.mpi as mpi
 from vest.embedders.mpi_net_single_view import UNet as SingleViewUNet
 from vest.flows.grid_utils import grid_to_flow
-from tu.ddp import master_only_print
 import torch
 import torch.nn as nn
 import torch.nn.functional as F
@@ -143,9 +142,9 @@ class MPIEmbedder(BaseMPI):
         self.output_no_color = flow_cfg.output_no_color  # disable color prediction
         self.output_residual_color = flow_cfg.output_residual_color
         if self.output_no_color:
-            master_only_print('disable color prediction')
+            print('disable color prediction')
         if self.output_residual_color:
-            master_only_print('output residual color')
+            print('output residual color')
         if not self.output_no_color:
             self.bg_net = nn.Conv2d(net.out_channels, self.n_channels, kernel_size=(3, 3), padding=1)
 

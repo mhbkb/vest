@@ -1,4 +1,4 @@
-from tu.ddp import master_only_print
+#from tu.ddp import master_only_print
 import torch
 
 
@@ -18,10 +18,10 @@ class MyBaseDataset(torch.utils.data.Dataset):
         self.is_inference = is_inference
         self.is_test = is_test
 
-        master_only_print("===== data info =======")
-        master_only_print('is_inference', is_inference, 'is_test', is_test)
-        master_only_print(self.data_info)
-        master_only_print("=======================")
+        print("===== data info =======")
+        print('is_inference', is_inference, 'is_test', is_test)
+        print(self.data_info)
+        print("=======================")
 
         self.sequence_length = cfg.data.train.initial_sequence_length
         self.sequence_length_max = cfg.data.train.max_sequence_length
